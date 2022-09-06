@@ -63,56 +63,6 @@ pub struct DistrRecord {
     #[prost(string, tag = "2")]
     pub weight: ::prost::alloc::string::String,
 }
-/// ReplacePoolIncentivesProposal is a gov Content type for updating the pool
-/// incentives. If a ReplacePoolIncentivesProposal passes, the proposal’s records
-/// override the existing DistrRecords set in the module. Each record has a
-/// specified gauge id and weight, and the incentives are distributed to each
-/// gauge according to weight/total_weight. The incentives are put in the fee
-/// pool and it is allocated to gauges and community pool by the DistrRecords
-/// configuration. Note that gaugeId=0 represents the community pool.
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    serde::Serialize,
-    serde::Deserialize,
-    schemars::JsonSchema,
-    CosmwasmExt,
-)]
-#[proto_message(type_url = "/osmosis.poolincentives.v1beta1.ReplacePoolIncentivesProposal")]
-pub struct ReplacePoolIncentivesProposal {
-    #[prost(string, tag = "1")]
-    pub title: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub description: ::prost::alloc::string::String,
-    #[prost(message, repeated, tag = "3")]
-    pub records: ::prost::alloc::vec::Vec<DistrRecord>,
-}
-/// For example: if the existing DistrRecords were:
-/// [(Gauge 0, 5), (Gauge 1, 6), (Gauge 2, 6)]
-/// An UpdatePoolIncentivesProposal includes
-/// [(Gauge 1, 0), (Gauge 2, 4), (Gauge 3, 10)]
-/// This would delete Gauge 1, Edit Gauge 2, and Add Gauge 3
-/// The result DistrRecords in state would be:
-/// [(Gauge 0, 5), (Gauge 2, 4), (Gauge 3, 10)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    serde::Serialize,
-    serde::Deserialize,
-    schemars::JsonSchema,
-    CosmwasmExt,
-)]
-#[proto_message(type_url = "/osmosis.poolincentives.v1beta1.UpdatePoolIncentivesProposal")]
-pub struct UpdatePoolIncentivesProposal {
-    #[prost(string, tag = "1")]
-    pub title: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub description: ::prost::alloc::string::String,
-    #[prost(message, repeated, tag = "3")]
-    pub records: ::prost::alloc::vec::Vec<DistrRecord>,
-}
 #[derive(
     Clone,
     PartialEq,
@@ -166,6 +116,8 @@ pub mod query_gauge_ids_response {
         pub gauge_id: u64,
         #[prost(message, optional, tag = "2")]
         pub duration: ::core::option::Option<crate::shim::Duration>,
+        #[prost(string, tag = "3")]
+        pub gauge_incentive_percentage: ::prost::alloc::string::String,
     }
 }
 #[derive(
@@ -350,6 +302,56 @@ pub struct GenesisState {
     pub lockable_durations: ::prost::alloc::vec::Vec<crate::shim::Duration>,
     #[prost(message, optional, tag = "3")]
     pub distr_info: ::core::option::Option<DistrInfo>,
+}
+/// ReplacePoolIncentivesProposal is a gov Content type for updating the pool
+/// incentives. If a ReplacePoolIncentivesProposal passes, the proposal’s records
+/// override the existing DistrRecords set in the module. Each record has a
+/// specified gauge id and weight, and the incentives are distributed to each
+/// gauge according to weight/total_weight. The incentives are put in the fee
+/// pool and it is allocated to gauges and community pool by the DistrRecords
+/// configuration. Note that gaugeId=0 represents the community pool.
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    serde::Serialize,
+    serde::Deserialize,
+    schemars::JsonSchema,
+    CosmwasmExt,
+)]
+#[proto_message(type_url = "/osmosis.poolincentives.v1beta1.ReplacePoolIncentivesProposal")]
+pub struct ReplacePoolIncentivesProposal {
+    #[prost(string, tag = "1")]
+    pub title: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub description: ::prost::alloc::string::String,
+    #[prost(message, repeated, tag = "3")]
+    pub records: ::prost::alloc::vec::Vec<DistrRecord>,
+}
+/// For example: if the existing DistrRecords were:
+/// [(Gauge 0, 5), (Gauge 1, 6), (Gauge 2, 6)]
+/// An UpdatePoolIncentivesProposal includes
+/// [(Gauge 1, 0), (Gauge 2, 4), (Gauge 3, 10)]
+/// This would delete Gauge 1, Edit Gauge 2, and Add Gauge 3
+/// The result DistrRecords in state would be:
+/// [(Gauge 0, 5), (Gauge 2, 4), (Gauge 3, 10)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    serde::Serialize,
+    serde::Deserialize,
+    schemars::JsonSchema,
+    CosmwasmExt,
+)]
+#[proto_message(type_url = "/osmosis.poolincentives.v1beta1.UpdatePoolIncentivesProposal")]
+pub struct UpdatePoolIncentivesProposal {
+    #[prost(string, tag = "1")]
+    pub title: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub description: ::prost::alloc::string::String,
+    #[prost(message, repeated, tag = "3")]
+    pub records: ::prost::alloc::vec::Vec<DistrRecord>,
 }
 pub struct PoolincentivesQuerier<'a> {
     querier: cosmwasm_std::QuerierWrapper<'a, cosmwasm_std::Empty>,
