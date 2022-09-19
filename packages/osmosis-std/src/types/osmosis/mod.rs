@@ -7,4 +7,5 @@ pub mod poolincentives;
 pub mod store;
 pub mod superfluid;
 pub mod tokenfactory;
+pub mod twap;
 pub mod txfees;
