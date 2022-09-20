@@ -147,7 +147,7 @@ fn transform_items(
                     /// NOTE: The following type is not implemented due to current limitations of code generator
                     /// which currently has issue with tendermint_proto.
                     /// This will be fixed in the upcoming release.
-                    #[allow(dead_code)
+                    #[allow(dead_code)]
                     struct #ident {}
                 })
             } else {

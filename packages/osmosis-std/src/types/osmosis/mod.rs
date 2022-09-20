@@ -1,10 +1,12 @@
 pub mod epochs;
 pub mod gamm;
+pub mod ibcratelimit;
 pub mod incentives;
 pub mod lockup;
 pub mod mint;
 pub mod poolincentives;
 pub mod store;
+pub mod streamswap;
 pub mod superfluid;
 pub mod tokenfactory;
 pub mod twap;
